@@ -48,18 +48,18 @@ export const theme = createTheme({
       fontWeight: 'bold',
       fontSize: 34,
       lineHeight: 42.5,
-      color: palette.black,
+      color: 'textPrimary',
     },
     subheader: {
       fontWeight: '600',
       fontSize: 28,
       lineHeight: 36,
-      color: palette.black,
+      color: 'textPrimary',
     },
     body: {
       fontSize: 16,
       lineHeight: 24,
-      color: palette.black,
+      color: 'textPrimary',
     },
   },
 });
@@ -76,21 +76,5 @@ export const darkTheme: Theme = {
     textPrimary: palette.white,
     textSecondary: palette.transparentWhite,
     textContrasting: palette.black,
-  },
-  textVariants: {
-    ...theme.textVariants,
-
-    header: {
-      ...theme.textVariants.header,
-      color: palette.white,
-    },
-    subheader: {
-      ...theme.textVariants.subheader,
-      color: palette.white,
-    },
-    body: {
-      ...theme.textVariants.body,
-      color: palette.white,
-    },
   },
 };
