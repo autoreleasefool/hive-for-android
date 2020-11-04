@@ -1,11 +1,15 @@
 import {createTheme} from '@shopify/restyle';
 
 const palette = {
-  primaryRed: '#ED5252',
+  primaryRed: 'rgb(238, 82, 83)',
+  primaryRedTransparent: 'rgba(238, 82, 83, 0.7)',
 
-  primaryGreyLight: '#182534',
-  primaryGrey: '#212E3D',
-  primaryGreyDark: '#2C3948',
+  primaryGreyLight: 'rgb(44, 57, 72)',
+  primaryGreyLightTransparent: 'rgba(44, 57, 72, 0.7)',
+  primaryGrey: 'rgb(34, 47, 62)',
+  primaryGreyTransparent: 'rgba(34, 47, 62, 0.7)',
+  primaryGreyDark: 'rgb(24, 37, 52)',
+  primaryGreyDarkTransparent: 'rgba(24, 37, 52, 0.7)',
 
   yellow: '#FECA57',
   green: '#10AC84',
@@ -20,12 +24,16 @@ const palette = {
 export const theme = createTheme({
   colors: {
     primary: palette.primaryRed,
+    primaryTransparent: palette.primaryRedTransparent,
+    secondary: palette.primaryGreyLight,
+    secondaryTransparent: palette.primaryGreyLightTransparent,
 
     background: palette.primaryGrey,
 
     textPrimary: palette.black,
     textSecondary: palette.transparentBlack,
     textContrasting: palette.white,
+    textContrastingSecondary: palette.transparentWhite,
 
     highlightSuccess: palette.green,
     highlightWarning: palette.yellow,
@@ -38,6 +46,10 @@ export const theme = createTheme({
     l: 24,
     xl: 32,
     xxl: 40,
+  },
+  borderRadii: {
+    s: 4,
+    m: 8,
   },
   breakpoints: {
     phone: 0,
@@ -66,15 +78,17 @@ export const theme = createTheme({
 
 export type Theme = typeof theme;
 
-export const darkTheme: Theme = {
-  ...theme,
-  colors: {
-    ...theme.colors,
+export const darkTheme: Theme = theme;
 
-    background: palette.white,
+// export const darkTheme: Theme = {
+//   ...theme,
+//   colors: {
+//     ...theme.colors,
 
-    textPrimary: palette.white,
-    textSecondary: palette.transparentWhite,
-    textContrasting: palette.black,
-  },
-};
+//     background: palette.white,
+
+//     textPrimary: palette.white,
+//     textSecondary: palette.transparentWhite,
+//     textContrasting: palette.black,
+//   },
+// };
