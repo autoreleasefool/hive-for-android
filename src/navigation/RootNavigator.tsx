@@ -1,4 +1,4 @@
-import React, {ReactNode, useContext, useState} from 'react';
+import React, {ReactNode, createContext, useContext, useState} from 'react';
 
 type RootScreen = 'welcome' | 'app';
 
@@ -7,7 +7,7 @@ interface RootScreenContext {
   navigate(screen: RootScreen): void;
 }
 
-const RootNavigatorContext = React.createContext<RootScreenContext>({
+const RootNavigatorContext = createContext<RootScreenContext>({
   currentScreen: 'welcome',
   navigate: (_: RootScreen) => {},
 });
