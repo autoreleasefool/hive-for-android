@@ -1,8 +1,9 @@
 import React, {useCallback} from 'react';
 import {Pressable} from 'react-native';
-import {Box, Text} from 'components';
+
 import Glyph from 'assets/images/glyph.svg';
-import {Feature, hasFeature, useFeatureFlag} from 'utilities/features';
+import {Box, Text} from 'components';
+import {Feature, hasFeature} from 'utilities/features';
 
 const Button = ({label, onPress}: {label: string; onPress: () => void}) => {
   return (

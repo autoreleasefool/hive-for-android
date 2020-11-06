@@ -2,9 +2,10 @@ import React from 'react';
 import {useColorScheme} from 'react-native';
 import {ThemeProvider} from '@shopify/restyle';
 import {NavigationContainer} from '@react-navigation/native';
-import {theme as lightTheme, darkTheme} from 'utilities/theme';
+
 import {RootNavigator} from 'navigation/RootNavigator';
 import {WelcomeScreen} from 'sections/welcome/WelcomeScreen';
+import {theme as lightTheme, darkTheme} from 'utilities/theme';
 
 const App = () => {
   const colorScheme = useColorScheme();
