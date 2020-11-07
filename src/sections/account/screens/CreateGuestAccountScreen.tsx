@@ -1,9 +1,10 @@
 import React, {useEffect} from 'react';
 import {StackNavigationProp} from '@react-navigation/stack';
 
+import {Account, SignupResponse, useMutableAccount} from 'api/account';
 import {Endpoint} from 'api/endpoint';
 import {useQuery} from 'api/useQuery';
-import {LoadingView} from 'components/LoadingView';
+import {Box, LoadingView} from 'components';
 import {useRootNavigation} from 'navigation/RootNavigator';
 import {WelcomeRoute} from 'navigation/welcome/welcomeRoutes';
 
@@ -13,13 +14,23 @@ interface Props {
 
 export const CreateGuestAccountScreen = ({navigation}: Props) => {
   const rootNavigation = useRootNavigation();
-  const {data, error, isLoading} = useQuery({endpoint: Endpoint.createGuestAccount});
+  const [, setAccount] = useMutableAccount();
+  const {data, error} = useQuery<SignupResponse>({
+    endpoint: Endpoint.createGuestAccount,
+  });
 
   useEffect(() => {
-    if (data) {
+    if (data?.token) {
+      setAccount(new Account(data.token.userId, data.token.token, true));
       rootNavigation.navigate('Content');
     }
-  }, [data, rootNavigation]);
+  }, [data, setAccount, rootNavigation]);
+
+  useEffect(() => {
+    if (error) {
+      // TODO: present error message
+    }
+  }, [error]);
 
   useEffect(() => {
     const unsubscribe = navigation.addListener('beforeRemove', e => {
@@ -29,13 +40,9 @@ export const CreateGuestAccountScreen = ({navigation}: Props) => {
     return unsubscribe;
   }, [navigation]);
 
-  const message = isLoading
-    ? 'Loading'
-    : data
-    ? 'Loaded!'
-    : error
-    ? JSON.stringify(error.type)
-    : 'wtf';
-
-  return <LoadingView message={message} title="Creating guest accoun" />;
+  return (
+    <Box flex={1} backgroundColor="background">
+      <LoadingView message="Creating guest account" />
+    </Box>
+  );
 };

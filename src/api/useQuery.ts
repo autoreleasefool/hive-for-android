@@ -21,7 +21,7 @@ type QueryError = {type: QueryErrorType} & (
   | {type: QueryErrorType.responseError; error: Error}
 );
 
-export const useQuery = <T>(request: QueryParams) => {
+export const useQuery = <T = any>(request: QueryParams) => {
   const account = useAccount();
 
   const [didPerformFetch, setDidPerformFetch] = useState(false);

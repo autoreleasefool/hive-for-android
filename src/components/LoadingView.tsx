@@ -13,12 +13,12 @@ export const LoadingView = ({title, message}: Props) => {
   return (
     <Box flex={1} justifyContent="center" alignItems="center">
       {title ? (
-        <Text variant="header" paddingBottom="m" paddingHorizontal="m">
+        <Text variant="subheader" paddingBottom="m" paddingHorizontal="m">
           {title}
         </Text>
       ) : null}
       {message ? (
-        <Text variant="subheader" paddingBottom="m" paddingHorizontal="m">
+        <Text variant="body" paddingBottom="m" paddingHorizontal="m">
           {message}
         </Text>
       ) : null}
