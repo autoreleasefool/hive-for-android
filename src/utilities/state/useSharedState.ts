@@ -1,5 +1,7 @@
 import {createContext, useCallback, useContext, useEffect, useMemo, useState} from 'react';
 
+import {SharedStateKey} from 'utilities/constants';
+
 import {Observable} from './observable';
 
 export class SharedStateContainer {
@@ -19,7 +21,7 @@ export class SharedStateContainer {
 
 export const SharedStateContext = createContext(new SharedStateContainer());
 
-export const useSharedState = <T>(id: string, initialValue: T): [T, (_: T) => void] => {
+export const useSharedState = <T>(id: SharedStateKey, initialValue: T): [T, (_: T) => void] => {
   const context = useContext(SharedStateContext);
   const observable = useMemo(() => context.getObservable<T>(id, initialValue), [context, id]);
 

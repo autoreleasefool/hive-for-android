@@ -1,3 +1,4 @@
+import {SharedStateKey} from 'utilities/constants';
 import {useSharedState} from 'utilities/state';
 
 const offlineId = '602c977d-168a-4771-8599-9f35ed1abd41';
@@ -40,7 +41,10 @@ export class Account {
 }
 
 export const useMutableAccount = (): [Account | undefined, (_: Account | undefined) => void] => {
-  const [account, setAccount] = useSharedState<Account | undefined>('account', undefined);
+  const [account, setAccount] = useSharedState<Account | undefined>(
+    SharedStateKey.account,
+    undefined,
+  );
 
   // TODO: load cached account
 

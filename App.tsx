@@ -3,9 +3,9 @@ import {useColorScheme} from 'react-native';
 import {ThemeProvider} from '@shopify/restyle';
 import {NavigationContainer} from '@react-navigation/native';
 
+import {Text} from 'components';
 import {RootNavigator} from 'navigation/RootNavigator';
 import {theme as lightTheme, darkTheme} from 'utilities/theme';
-import {Text} from 'components';
 import {WelcomeNavigator} from 'navigation/welcome/WelcomeNavigator';
 
 const App = () => {

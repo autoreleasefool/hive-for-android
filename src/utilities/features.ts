@@ -1,3 +1,4 @@
+import {SharedStateKey} from './constants';
 import {useSharedState} from './state';
 
 export enum Feature {
@@ -45,7 +46,7 @@ const isFeatureEnabled = (feature: Feature) => {
 };
 
 export const useFeatureFlag = (feature: Feature) => {
-  return useSharedState(feature, isFeatureEnabled(feature));
+  return useSharedState(SharedStateKey.featureFlags, isFeatureEnabled(feature));
 };
 
 export const hasFeature = (feature: Feature) => {
