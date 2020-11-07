@@ -57,7 +57,6 @@ export const method = (request: EndpointParams): string => {
 };
 
 export const requiresAccount = (request: EndpointParams): boolean => {
-  console.log(JSON.stringify(request));
   switch (request.endpoint) {
     case Endpoint.login:
     case Endpoint.logout:

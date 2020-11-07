@@ -29,8 +29,6 @@ export const useQuery = <T>(request: QueryParams) => {
   const [data, setData] = useState<T>();
   const [error, setError] = useState<QueryError>();
 
-  console.log(didPerformFetch, isLoading, data, error);
-
   const postError = useCallback(
     (error: QueryError) => {
       setError(error);
@@ -46,7 +44,6 @@ export const useQuery = <T>(request: QueryParams) => {
 
     const performFetch = async (account: Account | undefined) => {
       let url = `${baseURL}/${path(request)}`;
-      console.log(`fetching ${url}`);
       let response: Response;
       try {
         response = await fetch(url, {
@@ -64,8 +61,6 @@ export const useQuery = <T>(request: QueryParams) => {
       }
 
       try {
-        console.log('parsing json');
-        console.log(JSON.stringify(response));
         const json = await response.json();
         setData(json);
       } catch (error) {
@@ -75,15 +70,12 @@ export const useQuery = <T>(request: QueryParams) => {
 
     const queryRequiresAccount = requiresAccount(request);
     if (queryRequiresAccount) {
-      console.log('requires account');
       if (!account) {
-        console.log('no account');
         postError({type: QueryErrorType.noAccount});
         return;
       }
 
       if (account.isOffline()) {
-        console.log('offline');
         postError({type: QueryErrorType.usingOfflineAccount});
         return;
       }

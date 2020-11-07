@@ -44,7 +44,6 @@ export const WelcomeScreen = ({navigation}: Props) => {
   }, []);
 
   const onCreateGuestAccount = useCallback(() => {
-    console.log('TODO: create guest account');
     navigation.navigate('CreateGuestAccount');
   }, []);
 
