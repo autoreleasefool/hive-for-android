@@ -4,23 +4,21 @@ import {ThemeProvider} from '@shopify/restyle';
 import {NavigationContainer} from '@react-navigation/native';
 
 import {RootNavigator} from 'navigation/RootNavigator';
-import {WelcomeScreen} from 'sections/welcome/WelcomeScreen';
 import {theme as lightTheme, darkTheme} from 'utilities/theme';
+import {Text} from 'components';
+import {WelcomeNavigator} from 'navigation/welcome/WelcomeNavigator';
 
 const App = () => {
   const colorScheme = useColorScheme();
   const theme = colorScheme === 'dark' ? darkTheme : lightTheme;
-
-  const appScreen = <WelcomeScreen />;
-  const welcomeScreen = <WelcomeScreen />;
 
   return (
     <ThemeProvider theme={theme}>
       <NavigationContainer>
         <RootNavigator
           screens={{
-            welcome: welcomeScreen,
-            app: appScreen,
+            Content: () => <Text>Cool</Text>,
+            Welcome: WelcomeNavigator,
           }}
         />
       </NavigationContainer>

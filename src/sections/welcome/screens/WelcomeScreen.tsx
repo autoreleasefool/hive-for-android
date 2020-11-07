@@ -1,8 +1,11 @@
 import React, {useCallback} from 'react';
 import {Pressable} from 'react-native';
+import {useNavigation} from '@react-navigation/native';
+import {StackNavigationProp} from '@react-navigation/stack';
 
 import Glyph from 'assets/images/glyph.svg';
 import {Box, Text} from 'components';
+import {WelcomeRoute} from 'navigation/welcome/welcomeRoutes';
 import {Feature, hasFeature} from 'utilities/features';
 
 const Button = ({label, onPress}: {label: string; onPress: () => void}) => {
@@ -27,7 +30,11 @@ const Button = ({label, onPress}: {label: string; onPress: () => void}) => {
   );
 };
 
-export const WelcomeScreen = () => {
+interface Props {
+  navigation: StackNavigationProp<WelcomeRoute, 'Welcome'>;
+}
+
+export const WelcomeScreen = ({navigation}: Props) => {
   const canPlayOnline = hasFeature(Feature.accounts);
   const canPlayAsGuest = hasFeature(Feature.guestMode);
   const canPlayOffline = hasFeature(Feature.offlineMode);
@@ -38,6 +45,7 @@ export const WelcomeScreen = () => {
 
   const onCreateGuestAccount = useCallback(() => {
     console.log('TODO: create guest account');
+    navigation.navigate('CreateGuestAccount');
   }, []);
 
   const onPlayOffline = useCallback(() => {

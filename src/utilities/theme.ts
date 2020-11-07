@@ -29,6 +29,8 @@ export const theme = createTheme({
     secondaryTransparent: palette.primaryGreyLightTransparent,
 
     background: palette.primaryGrey,
+    backgroundLight: palette.primaryGreyLight,
+    backgroundDark: palette.primaryGreyDark,
 
     textPrimary: palette.black,
     textSecondary: palette.transparentBlack,

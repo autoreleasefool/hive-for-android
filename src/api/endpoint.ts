@@ -11,15 +11,15 @@ export enum Endpoint {
 export const path = (request: EndpointParams): string => {
   switch (request.endpoint) {
     case Endpoint.login:
-      return 'users/login';
+      return 'api/users/login';
     case Endpoint.signup:
-      return 'users/signup';
+      return 'api/users/signup';
     case Endpoint.createGuestAccount:
-      return 'users/guestSignup';
+      return 'api/users/guestSignup';
     case Endpoint.logout:
-      return 'users/logout';
+      return 'api/users/logout';
     case Endpoint.checkToken:
-      return 'users/validate';
+      return 'api/users/validate';
   }
 };
 
@@ -32,27 +32,40 @@ export const headers = (request: EndpointParams): {[key: string]: string} => {
       return {Authorization: `Basic ${base64Auth}`};
     }
 
-    case (Endpoint.logout, Endpoint.checkToken):
+    case Endpoint.logout:
+      return request.account.headers();
+    case Endpoint.checkToken:
       return request.account.headers();
 
-    case (Endpoint.signup, Endpoint.createGuestAccount):
+    case Endpoint.signup:
+    case Endpoint.createGuestAccount:
       return {};
   }
-
-  return {};
 };
 
 export const method = (request: EndpointParams): string => {
   switch (request.endpoint) {
-    case Endpoint.login: Endpoint.signup, Endpoint.createGuestAccount:
+    case Endpoint.login:
+    case Endpoint.signup:
+    case Endpoint.createGuestAccount:
       return 'POST';
     case Endpoint.logout:
       return 'DELETE';
     case Endpoint.checkToken:
       return 'GET';
   }
+};
 
-  return 'GET';
+export const requiresAccount = (request: EndpointParams): boolean => {
+  console.log(JSON.stringify(request));
+  switch (request.endpoint) {
+    case Endpoint.login:
+    case Endpoint.logout:
+    case Endpoint.signup:
+    case Endpoint.createGuestAccount:
+    case Endpoint.checkToken:
+      return false;
+  }
 };
 
 export type EndpointParams =

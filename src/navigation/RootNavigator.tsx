@@ -1,6 +1,6 @@
-import React, {ReactNode, createContext, useContext, useState} from 'react';
+import React, {createContext, ReactNode, useContext, useState} from 'react';
 
-type RootScreen = 'welcome' | 'app';
+type RootScreen = 'Welcome' | 'Content';
 
 interface RootScreenContext {
   currentScreen: RootScreen;
@@ -8,18 +8,12 @@ interface RootScreenContext {
 }
 
 const RootNavigatorContext = createContext<RootScreenContext>({
-  currentScreen: 'welcome',
+  currentScreen: 'Welcome',
   navigate: (_: RootScreen) => {},
 });
 
-interface RootNavigatorProps {
-  screens: {
-    [key in RootScreen]: ReactNode;
-  };
-}
-
-export const RootNavigator = ({screens}: RootNavigatorProps) => {
-  const [currentScreen, setCurrentScreen] = useState<RootScreen>('welcome');
+export const RootNavigator = ({screens}: {screens: {[key in RootScreen]: () => ReactNode}}) => {
+  const [currentScreen, setCurrentScreen] = useState<RootScreen>('Welcome');
 
   return (
     <RootNavigatorContext.Provider
@@ -30,7 +24,7 @@ export const RootNavigator = ({screens}: RootNavigatorProps) => {
           setCurrentScreen(screen);
         },
       }}>
-      {screens[currentScreen]}
+      {screens[currentScreen]()}
     </RootNavigatorContext.Provider>
   );
 };

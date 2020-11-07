@@ -1,7 +1,11 @@
 import {useCallback, useEffect, useState} from 'react';
 import {baseURL} from './constants';
 import {Account, useAccount} from './account';
-import {path, headers, method, EndpointParams} from './endpoint';
+import {path, headers, method, requiresAccount, EndpointParams} from './endpoint';
+
+type QueryParams = EndpointParams & {
+  skip?: boolean;
+};
 
 enum QueryErrorType {
   noAccount,
@@ -17,13 +21,15 @@ type QueryError = {type: QueryErrorType} & (
   | {type: QueryErrorType.responseError; error: Error}
 );
 
-export const useQuery = <T>(request: EndpointParams) => {
+export const useQuery = <T>(request: QueryParams) => {
   const account = useAccount();
 
   const [didPerformFetch, setDidPerformFetch] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
   const [data, setData] = useState<T>();
   const [error, setError] = useState<QueryError>();
+
+  console.log(didPerformFetch, isLoading, data, error);
 
   const postError = useCallback(
     (error: QueryError) => {
@@ -34,12 +40,13 @@ export const useQuery = <T>(request: EndpointParams) => {
   );
 
   useEffect(() => {
-    if (didPerformFetch) {
+    if (request.skip || didPerformFetch) {
       return;
     }
 
-    const performFetch = async (account: Account) => {
+    const performFetch = async (account: Account | undefined) => {
       let url = `${baseURL}/${path(request)}`;
+      console.log(`fetching ${url}`);
       let response: Response;
       try {
         response = await fetch(url, {
@@ -47,7 +54,7 @@ export const useQuery = <T>(request: EndpointParams) => {
           headers: {
             'Content-Type': 'application/json',
             Accept: 'application/json',
-            ...account.headers(),
+            ...(account?.headers() ?? {}),
             ...headers(request),
           },
         });
@@ -57,6 +64,8 @@ export const useQuery = <T>(request: EndpointParams) => {
       }
 
       try {
+        console.log('parsing json');
+        console.log(JSON.stringify(response));
         const json = await response.json();
         setData(json);
       } catch (error) {
@@ -64,14 +73,20 @@ export const useQuery = <T>(request: EndpointParams) => {
       }
     };
 
-    if (!account) {
-      postError({type: QueryErrorType.noAccount});
-      return;
-    }
+    const queryRequiresAccount = requiresAccount(request);
+    if (queryRequiresAccount) {
+      console.log('requires account');
+      if (!account) {
+        console.log('no account');
+        postError({type: QueryErrorType.noAccount});
+        return;
+      }
 
-    if (account.isOffline()) {
-      postError({type: QueryErrorType.noAccount});
-      return;
+      if (account.isOffline()) {
+        console.log('offline');
+        postError({type: QueryErrorType.usingOfflineAccount});
+        return;
+      }
     }
 
     setDidPerformFetch(true);
