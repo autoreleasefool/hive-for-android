@@ -9,7 +9,7 @@ interface ToastContextInterface {
 
 export const ToastContext = createContext<ToastContextInterface>({
   toast: null,
-  showToast: (_: ToastConfig) => {},
+  showToast: () => {},
   hideToast: () => {},
 });
 

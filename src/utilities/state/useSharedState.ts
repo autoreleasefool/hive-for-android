@@ -25,7 +25,11 @@ export const SharedStateContext = createContext(new SharedStateContainer());
 
 export const useSharedState = <T>(id: SharedStateKey, initialValue: T): [T, (_: T) => void] => {
   const context = useContext(SharedStateContext);
-  const observable = useMemo(() => context.getObservable<T>(id, initialValue), [context, id]);
+  const observable = useMemo(() => context.getObservable<T>(id, initialValue), [
+    context,
+    id,
+    initialValue,
+  ]);
 
   const setSharedValue = useCallback(
     (value: T) => {

@@ -44,7 +44,7 @@ export const WelcomeScreen = ({navigation}: Props) => {
 
   const onCreateGuestAccount = useCallback(() => {
     navigation.navigate('CreateGuestAccount');
-  }, []);
+  }, [navigation]);
 
   const onPlayOffline = useCallback(() => {
     console.log('TODO: play offline');

@@ -11,6 +11,10 @@ import {RootNavigator} from 'navigation/RootNavigator';
 import {WelcomeNavigator} from 'navigation/welcome/WelcomeNavigator';
 import {theme as lightTheme, darkTheme} from 'utilities/theme';
 
+const Temp = () => {
+  return <Text>Cool</Text>;
+};
+
 const App = () => {
   const colorScheme = useColorScheme();
   const theme = colorScheme === 'dark' ? darkTheme : lightTheme;
@@ -23,7 +27,7 @@ const App = () => {
             <NavigationContainer>
               <RootNavigator
                 screens={{
-                  Content: () => <Text>Cool</Text>,
+                  Content: Temp,
                   Welcome: WelcomeNavigator,
                 }}
               />

@@ -25,7 +25,14 @@ const featureRollout = (feature: Feature) => {
 };
 
 const featureDependencies = (feature: Feature): Feature[] => {
-  return [];
+  switch (feature) {
+    case Feature.accounts:
+      return [];
+    case Feature.guestMode:
+      return [];
+    case Feature.offlineMode:
+      return [];
+  }
 };
 
 const isFeatureEnabled = (feature: Feature) => {

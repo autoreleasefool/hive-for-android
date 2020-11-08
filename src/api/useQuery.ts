@@ -44,6 +44,7 @@ export const useQuery = <T = any>(request: QueryParams) => {
 
     const performFetch = async (account: Account | undefined) => {
       let url = `${baseURL}/${path(request)}`;
+      /* eslint-disable-next-line no-undef */
       let response: Response;
       try {
         response = await fetch(url, {
@@ -83,7 +84,7 @@ export const useQuery = <T = any>(request: QueryParams) => {
 
     setDidPerformFetch(true);
     performFetch(account);
-  }, [account, postError, didPerformFetch, setDidPerformFetch]);
+  }, [account, postError, didPerformFetch, setDidPerformFetch, request]);
 
   return {
     isLoading,

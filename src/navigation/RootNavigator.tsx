@@ -9,7 +9,7 @@ interface RootScreenContext {
 
 const RootNavigatorContext = createContext<RootScreenContext>({
   currentScreen: 'Welcome',
-  navigate: (_: RootScreen) => {},
+  navigate: () => {},
 });
 
 export const RootNavigator = ({screens}: {screens: {[key in RootScreen]: () => ReactNode}}) => {

@@ -36,7 +36,7 @@ export const CreateGuestAccountScreen = ({navigation}: Props) => {
       showToast({message: error.message, type: ToastType.error});
       navigation.pop();
     }
-  }, [error, navigation]);
+  }, [error, navigation, showToast]);
 
   const beforeRemove = useCallback(
     (e: EventArg<'beforeRemove', true, any>) => {
