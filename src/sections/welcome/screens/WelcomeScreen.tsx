@@ -19,7 +19,7 @@ const Button = ({label, onPress}: {label: string; onPress: () => void}) => {
             alignItems="center"
             justifyContent="center"
             borderRadius="m">
-            <Text variant="body" color={pressed ? 'textContrastingSecondary' : 'textContrasting'}>
+            <Text variant="body" color={pressed ? 'textSecondary' : 'textPrimary'}>
               {label}
             </Text>
           </Box>

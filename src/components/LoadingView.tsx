@@ -21,7 +21,7 @@ export const LoadingView = ({title, message}: Props) => {
           {message}
         </Text>
       ) : null}
-      <ActivityIndicator color="backgroundLight" />
+      <ActivityIndicator color="textSecondary" />
     </Box>
   );
 };

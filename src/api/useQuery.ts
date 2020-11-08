@@ -14,7 +14,7 @@ enum QueryErrorType {
   responseError,
 }
 
-type QueryError = {type: QueryErrorType} & (
+type QueryError = {type: QueryErrorType; message: string} & (
   | {type: QueryErrorType.noAccount}
   | {type: QueryErrorType.usingOfflineAccount}
   | {type: QueryErrorType.networkError; error: Error}
@@ -56,7 +56,7 @@ export const useQuery = <T = any>(request: QueryParams) => {
           },
         });
       } catch (error) {
-        postError({type: QueryErrorType.networkError, error});
+        postError({type: QueryErrorType.networkError, message: 'Network error', error});
         return;
       }
 
@@ -64,19 +64,19 @@ export const useQuery = <T = any>(request: QueryParams) => {
         const json = await response.json();
         setData(json);
       } catch (error) {
-        postError({type: QueryErrorType.responseError, error});
+        postError({type: QueryErrorType.responseError, message: 'Response error', error});
       }
     };
 
     const queryRequiresAccount = requiresAccount(request);
     if (queryRequiresAccount) {
       if (!account) {
-        postError({type: QueryErrorType.noAccount});
+        postError({type: QueryErrorType.noAccount, message: 'No account available'});
         return;
       }
 
       if (account.isOffline()) {
-        postError({type: QueryErrorType.usingOfflineAccount});
+        postError({type: QueryErrorType.usingOfflineAccount, message: 'Currently offline'});
         return;
       }
     }

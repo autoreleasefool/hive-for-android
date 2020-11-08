@@ -3,6 +3,7 @@ import {useColorScheme} from 'react-native';
 import {SafeAreaProvider} from 'react-native-safe-area-context';
 import {NavigationContainer} from '@react-navigation/native';
 import {ThemeProvider} from '@shopify/restyle';
+import {Box} from 'components/Box';
 import {Text} from 'components/Text';
 import {Toast} from 'components/toast/Toast';
 import {ToastProvider} from 'components/toast/ToastProvider';
@@ -16,19 +17,21 @@ const App = () => {
 
   return (
     <ThemeProvider theme={theme}>
-      <SafeAreaProvider>
-        <ToastProvider>
-          <NavigationContainer>
-            <RootNavigator
-              screens={{
-                Content: () => <Text>Cool</Text>,
-                Welcome: WelcomeNavigator,
-              }}
-            />
-            <Toast />
-          </NavigationContainer>
-        </ToastProvider>
-      </SafeAreaProvider>
+      <Box flex={1} backgroundColor="background">
+        <SafeAreaProvider>
+          <ToastProvider>
+            <NavigationContainer>
+              <RootNavigator
+                screens={{
+                  Content: () => <Text>Cool</Text>,
+                  Welcome: WelcomeNavigator,
+                }}
+              />
+              <Toast />
+            </NavigationContainer>
+          </ToastProvider>
+        </SafeAreaProvider>
+      </Box>
     </ThemeProvider>
   );
 };

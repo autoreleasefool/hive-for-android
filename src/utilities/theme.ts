@@ -32,10 +32,10 @@ export const theme = createTheme({
     backgroundLight: palette.primaryGreyLight,
     backgroundDark: palette.primaryGreyDark,
 
-    textPrimary: palette.black,
-    textSecondary: palette.transparentBlack,
-    textContrasting: palette.white,
-    textContrastingSecondary: palette.transparentWhite,
+    textPrimary: palette.white,
+    textSecondary: palette.transparentWhite,
+    textContrasting: palette.black,
+    textContrastingSecondary: palette.transparentBlack,
 
     highlightSuccess: palette.green,
     highlightWarning: palette.yellow,
