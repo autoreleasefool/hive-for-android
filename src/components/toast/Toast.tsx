@@ -1,8 +1,8 @@
 import React, {useCallback, useEffect, useRef} from 'react';
 import {Animated} from 'react-native';
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
-
-import {AnimatedBox, Box, Text} from 'components';
+import {AnimatedBox, Box} from 'components/Box';
+import {Text} from 'components/Text';
 import {Theme} from 'utilities/theme';
 import {useToast} from './ToastProvider';
 

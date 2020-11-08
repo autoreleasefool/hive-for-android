@@ -7,5 +7,15 @@
   "singleQuote": true,
   "trailingComma": "all",
   "arrowParens": "avoid",
-  "printWidth": 100
+  "printWidth": 100,
+  "importOrder": [
+    "^@.*$",
+    "^assets/(.*)$",
+    "^api/(.*)$",
+    "^components/(.*)$",
+    "^navigation/(.*)$",
+    "^sections/(.*)$",
+    "^utilities/(.*)$",
+    "^[.]/(.*)$"
+  ]
 }

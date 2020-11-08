@@ -1,10 +1,9 @@
 import React, {useCallback} from 'react';
 import {Pressable} from 'react-native';
-import {useNavigation} from '@react-navigation/native';
 import {StackNavigationProp} from '@react-navigation/stack';
-
 import Glyph from 'assets/images/glyph.svg';
-import {Box, Text} from 'components';
+import {Box} from 'components/Box';
+import {Text} from 'components/Text';
 import {WelcomeRoute} from 'navigation/welcome/welcomeRoutes';
 import {Feature, hasFeature} from 'utilities/features';
 

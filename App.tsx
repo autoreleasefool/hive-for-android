@@ -1,10 +1,9 @@
 import React from 'react';
 import {useColorScheme} from 'react-native';
-import {ThemeProvider} from '@shopify/restyle';
-import {NavigationContainer} from '@react-navigation/native';
 import {SafeAreaProvider} from 'react-native-safe-area-context';
-
-import {Text} from 'components';
+import {NavigationContainer} from '@react-navigation/native';
+import {ThemeProvider} from '@shopify/restyle';
+import {Text} from 'components/Text';
 import {Toast} from 'components/toast/Toast';
 import {ToastProvider} from 'components/toast/ToastProvider';
 import {RootNavigator} from 'navigation/RootNavigator';

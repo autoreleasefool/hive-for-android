@@ -1,5 +1,4 @@
 import React, {ReactNode, createContext, useContext, useState} from 'react';
-
 import {ToastConfig} from './Toast';
 
 interface ToastContextInterface {

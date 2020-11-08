@@ -1,13 +1,15 @@
 import {createContext, useCallback, useContext, useEffect, useMemo, useState} from 'react';
-
 import {SharedStateKey} from 'utilities/constants';
-
 import {Observable} from './observable';
 
 export class SharedStateContainer {
   private observables: {
     [key: string]: Observable<any>;
-  } = {};
+  };
+
+  constructor() {
+    this.observables = {};
+  }
 
   getObservable<T>(id: string, initialValue: T): Observable<T> {
     let observable = this.observables[id];

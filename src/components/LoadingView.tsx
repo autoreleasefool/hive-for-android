@@ -1,5 +1,4 @@
 import React from 'react';
-
 import {ActivityIndicator} from './ActivityIndicator';
 import {Box} from './Box';
 import {Text} from './Text';

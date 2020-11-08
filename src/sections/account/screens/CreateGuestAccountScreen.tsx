@@ -1,10 +1,10 @@
 import React, {useEffect} from 'react';
 import {StackNavigationProp} from '@react-navigation/stack';
-
 import {Account, SignupResponse, useMutableAccount} from 'api/account';
 import {Endpoint} from 'api/endpoint';
 import {useQuery} from 'api/useQuery';
-import {Box, LoadingView} from 'components';
+import {Box} from 'components/Box';
+import {LoadingView} from 'components/LoadingView';
 import {useRootNavigation} from 'navigation/RootNavigator';
 import {WelcomeRoute} from 'navigation/welcome/welcomeRoutes';
 

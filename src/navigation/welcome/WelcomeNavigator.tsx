@@ -1,9 +1,7 @@
 import React from 'react';
 import {createStackNavigator} from '@react-navigation/stack';
-
 import {CreateGuestAccountScreen} from 'sections/account/screens/CreateGuestAccountScreen';
 import {WelcomeScreen} from 'sections/welcome/screens/WelcomeScreen';
-
 import {WelcomeRoute} from './welcomeRoutes';
 
 const Stack = createStackNavigator<WelcomeRoute>();

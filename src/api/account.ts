@@ -1,5 +1,5 @@
 import {SharedStateKey} from 'utilities/constants';
-import {useSharedState} from 'utilities/state';
+import {useSharedState} from 'utilities/state/useSharedState';
 
 const offlineId = '602c977d-168a-4771-8599-9f35ed1abd41';
 const offlineToken = 'offline';

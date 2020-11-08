@@ -1,5 +1,5 @@
 import {SharedStateKey} from './constants';
-import {useSharedState} from './state';
+import {useSharedState} from './state/useSharedState';
 
 export enum Feature {
   guestMode = 'Guest mode',

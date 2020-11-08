@@ -1,7 +1,5 @@
 import {useCallback, useEffect, useState} from 'react';
-
 import {baseURL} from 'utilities/constants';
-
 import {Account, useAccount} from './account';
 import {path, headers, method, requiresAccount, EndpointParams} from './endpoint';
 
