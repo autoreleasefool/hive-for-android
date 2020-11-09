@@ -6,7 +6,23 @@ export enum Endpoint {
   createGuestAccount,
   logout,
   checkToken,
+
+  openMatches,
 }
+
+export type EndpointParams =
+  | {endpoint: Endpoint.login; email: string; password: string}
+  | {
+      endpoint: Endpoint.signup;
+      email: string;
+      displayName: string;
+      password: string;
+      verifyPassword: string;
+    }
+  | {endpoint: Endpoint.createGuestAccount}
+  | {endpoint: Endpoint.logout; account: Account}
+  | {endpoint: Endpoint.checkToken; account: Account}
+  | {endpoint: Endpoint.openMatches};
 
 export const path = (request: EndpointParams): string => {
   switch (request.endpoint) {
@@ -20,6 +36,8 @@ export const path = (request: EndpointParams): string => {
       return 'api/users/logout';
     case Endpoint.checkToken:
       return 'api/users/validate';
+    case Endpoint.openMatches:
+      return 'api/matches/open';
   }
 };
 
@@ -39,6 +57,7 @@ export const headers = (request: EndpointParams): {[key: string]: string} => {
 
     case Endpoint.signup:
     case Endpoint.createGuestAccount:
+    case Endpoint.openMatches:
       return {};
   }
 };
@@ -52,6 +71,7 @@ export const method = (request: EndpointParams): string => {
     case Endpoint.logout:
       return 'DELETE';
     case Endpoint.checkToken:
+    case Endpoint.openMatches:
       return 'GET';
   }
 };
@@ -64,18 +84,7 @@ export const requiresAccount = (request: EndpointParams): boolean => {
     case Endpoint.createGuestAccount:
     case Endpoint.checkToken:
       return false;
+    case Endpoint.openMatches:
+      return true;
   }
 };
-
-export type EndpointParams =
-  | {endpoint: Endpoint.login; email: string; password: string}
-  | {
-      endpoint: Endpoint.signup;
-      email: string;
-      displayName: string;
-      password: string;
-      verifyPassword: string;
-    }
-  | {endpoint: Endpoint.createGuestAccount}
-  | {endpoint: Endpoint.logout; account: Account}
-  | {endpoint: Endpoint.checkToken; account: Account};
