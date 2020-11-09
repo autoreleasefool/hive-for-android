@@ -9,7 +9,7 @@ import {LoadingView} from 'components/LoadingView';
 import {ToastType} from 'components/toast/Toast';
 import {useToast} from 'components/toast/ToastProvider';
 import {useRootNavigation} from 'navigation/RootNavigator';
-import {WelcomeRoute} from 'navigation/welcome/welcomeRoutes';
+import {WelcomeRoute} from 'navigation/welcome/welcomeRoute';
 
 interface Props {
   navigation: StackNavigationProp<WelcomeRoute, 'CreateGuestAccount'>;

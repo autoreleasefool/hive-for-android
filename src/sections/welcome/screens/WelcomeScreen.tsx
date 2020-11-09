@@ -4,7 +4,7 @@ import {StackNavigationProp} from '@react-navigation/stack';
 import Glyph from 'assets/images/glyph.svg';
 import {Box} from 'components/Box';
 import {Text} from 'components/Text';
-import {WelcomeRoute} from 'navigation/welcome/welcomeRoutes';
+import {WelcomeRoute} from 'navigation/welcome/welcomeRoute';
 import {Feature, hasFeature} from 'utilities/features';
 
 const Button = ({label, onPress}: {label: string; onPress: () => void}) => {
