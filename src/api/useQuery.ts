@@ -31,14 +31,17 @@ type QueryError = {type: QueryErrorType; message: string} & (
 
 type QueryHookResults<T extends Endpoint> = {
   isLoading: boolean;
+  isRefreshing: boolean;
   error: QueryError | undefined;
   data: HiveAPIResponse<T> | undefined;
+  refresh: () => void;
 };
 
 export const useQuery = <T extends Endpoint>(request: QueryRequest): QueryHookResults<T> => {
   const account = useAccount();
 
   const [didPerformFetch, setDidPerformFetch] = useState(false);
+  const [isRefreshing, setIsRefreshing] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
   const [data, setData] = useState<HiveAPIResponse<T>>();
   const [error, setError] = useState<QueryError>();
@@ -50,6 +53,12 @@ export const useQuery = <T extends Endpoint>(request: QueryRequest): QueryHookRe
     },
     [setIsLoading, setError],
   );
+
+  const refresh = useCallback(() => {
+    setIsRefreshing(true);
+    setError(undefined);
+    setDidPerformFetch(false);
+  }, [setDidPerformFetch, setError, setIsRefreshing]);
 
   useEffect(() => {
     if (request.skip || didPerformFetch) {
@@ -78,6 +87,8 @@ export const useQuery = <T extends Endpoint>(request: QueryRequest): QueryHookRe
       try {
         const json = await response.json();
         setData(json);
+        setIsLoading(false);
+        setIsRefreshing(false);
       } catch (error) {
         postError({type: QueryErrorType.responseError, message: 'Response error', error});
       }
@@ -98,11 +109,21 @@ export const useQuery = <T extends Endpoint>(request: QueryRequest): QueryHookRe
 
     setDidPerformFetch(true);
     performFetch(account);
-  }, [account, postError, didPerformFetch, setDidPerformFetch, request]);
+  }, [
+    account,
+    postError,
+    didPerformFetch,
+    setDidPerformFetch,
+    setIsLoading,
+    setIsRefreshing,
+    request,
+  ]);
 
   return {
     isLoading,
+    isRefreshing,
     data,
     error,
+    refresh,
   };
 };
