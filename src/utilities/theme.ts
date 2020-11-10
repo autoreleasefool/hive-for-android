@@ -75,6 +75,11 @@ export const theme = createTheme({
       lineHeight: 24,
       color: 'textPrimary',
     },
+    caption: {
+      fontSize: 12,
+      lineHeight: 16,
+      color: 'textPrimary',
+    },
   },
 });
 
