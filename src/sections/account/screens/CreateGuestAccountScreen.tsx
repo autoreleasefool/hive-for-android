@@ -1,7 +1,7 @@
 import React, {useCallback, useEffect} from 'react';
 import {EventArg} from '@react-navigation/native';
 import {StackNavigationProp} from '@react-navigation/stack';
-import {Account, SignupResponse, useMutableAccount} from 'api/account';
+import {Account, useMutableAccount} from 'api/account';
 import {Endpoint} from 'api/endpoint';
 import {useQuery} from 'api/useQuery';
 import {Box} from 'components/Box';
@@ -20,7 +20,7 @@ export const CreateGuestAccountScreen = ({navigation}: Props) => {
   const rootNavigation = useRootNavigation();
   const [, setAccount] = useMutableAccount();
 
-  const {data, error} = useQuery<SignupResponse>({
+  const {data, error} = useQuery(Endpoint.createGuestAccount, {
     endpoint: Endpoint.createGuestAccount,
   });
 

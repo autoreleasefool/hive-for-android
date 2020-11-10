@@ -1,9 +1,17 @@
 import {useCallback, useEffect, useState} from 'react';
 import {baseURL} from 'utilities/constants';
 import {Account, useAccount} from './account';
-import {path, headers, method, requiresAccount, EndpointParams} from './endpoint';
+import {
+  path,
+  headers,
+  method,
+  requiresAccount,
+  HiveAPIRequest,
+  HiveAPIResponse,
+  Endpoint,
+} from './endpoint';
 
-type QueryParams = EndpointParams & {
+type QueryRequest = HiveAPIRequest & {
   skip?: boolean;
 };
 
@@ -21,12 +29,18 @@ type QueryError = {type: QueryErrorType; message: string} & (
   | {type: QueryErrorType.responseError; error: Error}
 );
 
-export const useQuery = <T = any>(request: QueryParams) => {
+type QueryHookResults<T extends Endpoint> = {
+  isLoading: boolean;
+  error: QueryError | undefined;
+  data: HiveAPIResponse<T> | undefined;
+};
+
+export const useQuery = <T extends Endpoint>(request: QueryRequest): QueryHookResults<T> => {
   const account = useAccount();
 
   const [didPerformFetch, setDidPerformFetch] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
-  const [data, setData] = useState<T>();
+  const [data, setData] = useState<HiveAPIResponse<T>>();
   const [error, setError] = useState<QueryError>();
 
   const postError = useCallback(

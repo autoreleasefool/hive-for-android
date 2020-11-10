@@ -1,30 +1,92 @@
 import {Account} from './account';
+import {Match} from './types/match';
+import {SessionToken} from './types/signup';
 
-export enum Endpoint {
-  login,
-  signup,
-  createGuestAccount,
-  logout,
-  checkToken,
+export const enum Endpoint {
+  // Account
+  login = 'login',
+  signup = 'signup',
+  createGuestAccount = 'createGuestAccount',
+  logout = 'logout',
+  checkToken = 'checkToken',
 
-  openMatches,
+  // Matches
+  openMatches = 'openMatches',
 }
 
-export type EndpointParams =
-  | {endpoint: Endpoint.login; email: string; password: string}
-  | {
-      endpoint: Endpoint.signup;
-      email: string;
-      displayName: string;
-      password: string;
-      verifyPassword: string;
-    }
-  | {endpoint: Endpoint.createGuestAccount}
-  | {endpoint: Endpoint.logout; account: Account}
-  | {endpoint: Endpoint.checkToken; account: Account}
-  | {endpoint: Endpoint.openMatches};
+export type HiveAPIRequest =
+  | LoginRequest
+  | SignupRequest
+  | CreateGuestAccountRequest
+  | LogoutRequest
+  | CheckTokenRequest
+  | OpenMatchesRequest;
 
-export const path = (request: EndpointParams): string => {
+export type HiveAPIResponse<T extends Endpoint> = T extends Endpoint.login
+  ? LoginResponse
+  : T extends Endpoint.signup
+  ? SignupResponse
+  : T extends Endpoint.createGuestAccount
+  ? CreateGuestAccountResponse
+  : T extends Endpoint.logout
+  ? LogoutResponse
+  : T extends Endpoint.checkToken
+  ? CheckTokenResponse
+  : T extends Endpoint.openMatches
+  ? OpenMatchesResponse
+  : never;
+
+interface BaseRequest<T extends Endpoint> {
+  endpoint: T;
+}
+
+interface LoginRequest extends BaseRequest<Endpoint.login> {
+  // endpoint: Endpoint.login;
+  email: string;
+  password: string;
+}
+interface LoginResponse extends SessionToken {}
+
+interface SignupRequest extends BaseRequest<Endpoint.signup> {
+  // endpoint: Endpoint.signup;
+  email: string;
+  displayName: string;
+  password: string;
+  verifyPassword: string;
+}
+interface SignupResponse {
+  id: string;
+  email: string;
+  displayName: string;
+  avatarUrl?: string;
+  token: SessionToken;
+}
+
+interface CreateGuestAccountRequest extends BaseRequest<Endpoint.createGuestAccount> {
+  // endpoint: Endpoint.createGuestAccount;
+}
+interface CreateGuestAccountResponse extends SignupResponse {}
+
+interface LogoutRequest extends BaseRequest<Endpoint.logout> {
+  // endpoint: Endpoint.logout;
+  account: Account;
+}
+interface LogoutResponse {
+  success: boolean;
+}
+
+interface CheckTokenRequest extends BaseRequest<Endpoint.checkToken> {
+  // endpoint: Endpoint.checkToken;
+  account: Account;
+}
+interface CheckTokenResponse extends SessionToken {}
+
+interface OpenMatchesRequest extends BaseRequest<Endpoint.openMatches> {
+  // endpoint: Endpoint.openMatches;
+}
+type OpenMatchesResponse = Match[];
+
+export const path = (request: HiveAPIRequest): string => {
   switch (request.endpoint) {
     case Endpoint.login:
       return 'api/users/login';
@@ -41,7 +103,7 @@ export const path = (request: EndpointParams): string => {
   }
 };
 
-export const headers = (request: EndpointParams): {[key: string]: string} => {
+export const headers = (request: HiveAPIRequest): {[key: string]: string} => {
   switch (request.endpoint) {
     case Endpoint.login: {
       const auth = `${request.email}:${request.password}`;
@@ -49,20 +111,19 @@ export const headers = (request: EndpointParams): {[key: string]: string} => {
       const base64Auth = buffer.toString('base64');
       return {Authorization: `Basic ${base64Auth}`};
     }
-
     case Endpoint.logout:
-      return request.account.headers();
     case Endpoint.checkToken:
       return request.account.headers();
-
     case Endpoint.signup:
     case Endpoint.createGuestAccount:
     case Endpoint.openMatches:
       return {};
   }
+
+  return {};
 };
 
-export const method = (request: EndpointParams): string => {
+export const method = (request: HiveAPIRequest): 'GET' | 'POST' | 'DELETE' => {
   switch (request.endpoint) {
     case Endpoint.login:
     case Endpoint.signup:
@@ -76,7 +137,7 @@ export const method = (request: EndpointParams): string => {
   }
 };
 
-export const requiresAccount = (request: EndpointParams): boolean => {
+export const requiresAccount = (request: HiveAPIRequest): boolean => {
   switch (request.endpoint) {
     case Endpoint.login:
     case Endpoint.logout:
