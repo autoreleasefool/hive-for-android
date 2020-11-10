@@ -20,7 +20,7 @@ export const CreateGuestAccountScreen = ({navigation}: Props) => {
   const rootNavigation = useRootNavigation();
   const [, setAccount] = useMutableAccount();
 
-  const {data, error} = useQuery(Endpoint.createGuestAccount, {
+  const {data, error} = useQuery<Endpoint.createGuestAccount>({
     endpoint: Endpoint.createGuestAccount,
   });
 
