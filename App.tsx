@@ -4,16 +4,12 @@ import {SafeAreaProvider} from 'react-native-safe-area-context';
 import {NavigationContainer} from '@react-navigation/native';
 import {ThemeProvider} from '@shopify/restyle';
 import {Box} from 'components/Box';
-import {Text} from 'components/Text';
 import {Toast} from 'components/toast/Toast';
 import {ToastProvider} from 'components/toast/ToastProvider';
 import {RootNavigator} from 'navigation/RootNavigator';
+import {RootTabNavigator} from 'navigation/RootTabNavigator';
 import {WelcomeNavigator} from 'navigation/welcome/WelcomeNavigator';
 import {theme as lightTheme, darkTheme} from 'utilities/theme';
-
-const Temp = () => {
-  return <Text>Cool</Text>;
-};
 
 const App = () => {
   const colorScheme = useColorScheme();
@@ -27,7 +23,7 @@ const App = () => {
             <NavigationContainer>
               <RootNavigator
                 screens={{
-                  Content: Temp,
+                  Content: RootTabNavigator,
                   Welcome: WelcomeNavigator,
                 }}
               />
