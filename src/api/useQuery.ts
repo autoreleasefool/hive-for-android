@@ -80,6 +80,7 @@ export const useQuery = <T extends Endpoint>(request: QueryRequest): QueryHookRe
           },
         });
       } catch (error) {
+        console.error('Network request failed', error);
         postError({type: QueryErrorType.networkError, message: 'Network error', error});
         return;
       }
@@ -90,6 +91,7 @@ export const useQuery = <T extends Endpoint>(request: QueryRequest): QueryHookRe
         setIsLoading(false);
         setIsRefreshing(false);
       } catch (error) {
+        console.error('Response parsing failed', error);
         postError({type: QueryErrorType.responseError, message: 'Response error', error});
       }
     };
@@ -97,11 +99,13 @@ export const useQuery = <T extends Endpoint>(request: QueryRequest): QueryHookRe
     const queryRequiresAccount = requiresAccount(request);
     if (queryRequiresAccount) {
       if (!account) {
+        console.error('No account available for request');
         postError({type: QueryErrorType.noAccount, message: 'No account available'});
         return;
       }
 
       if (account.isOffline()) {
+        console.error('User is offline, cannot make network request');
         postError({type: QueryErrorType.usingOfflineAccount, message: 'Currently offline'});
         return;
       }

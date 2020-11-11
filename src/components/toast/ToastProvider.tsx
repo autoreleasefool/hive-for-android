@@ -1,28 +1,31 @@
-import React, {ReactNode, createContext, useContext, useState} from 'react';
+import React, {ReactNode, createContext, useContext, useState, useCallback} from 'react';
 import {ToastConfig} from './Toast';
 
 interface ToastContextInterface {
-  toast: ToastConfig | null;
+  toast: ToastConfig | undefined;
   showToast: (config: ToastConfig) => void;
   hideToast: () => void;
 }
 
 export const ToastContext = createContext<ToastContextInterface>({
-  toast: null,
+  toast: undefined,
   showToast: () => {},
   hideToast: () => {},
 });
 
 export const ToastProvider = ({children}: {children: ReactNode}) => {
-  const [toast, setToast] = useState<ToastConfig | null>(null);
+  const [toast, setToast] = useState<ToastConfig>();
 
-  const showToast = (config: ToastConfig) => {
-    setToast(config);
-  };
+  const showToast = useCallback(
+    (config: ToastConfig) => {
+      setToast(config);
+    },
+    [setToast],
+  );
 
-  const hideToast = () => {
-    setToast(null);
-  };
+  const hideToast = useCallback(() => {
+    setToast(undefined);
+  }, [setToast]);
 
   return (
     <ToastContext.Provider value={{toast, showToast, hideToast}}>{children}</ToastContext.Provider>

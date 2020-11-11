@@ -2,7 +2,7 @@ import {Account} from './account';
 import {Match} from './types/match';
 import {SessionToken} from './types/signup';
 
-export const enum Endpoint {
+export enum Endpoint {
   // Account
   login = 'login',
   signup = 'signup',
