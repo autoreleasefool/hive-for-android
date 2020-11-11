@@ -18,8 +18,25 @@ const EmptyScreen = () => {
 export const SpectatorNavigator = () => {
   return (
     <Stack.Navigator>
-      <Stack.Screen name="SpectatorLobby" component={LobbyListScreen} />
-      <Stack.Screen name="MatchDetails" component={EmptyScreen} />
+      <Stack.Screen
+        name="SpectatorLobby"
+        component={LobbyListScreen}
+        options={{title: 'Spectating'}}
+      />
+      <Stack.Screen
+        name="MatchDetails"
+        component={EmptyScreen}
+        options={({route}) => {
+          const title = (() => {
+            if (route.params.match.host?.displayName) {
+              return `${route.params.match.host.displayName}'s match`;
+            } else {
+              return 'Match details';
+            }
+          })();
+          return {title};
+        }}
+      />
     </Stack.Navigator>
   );
 };
