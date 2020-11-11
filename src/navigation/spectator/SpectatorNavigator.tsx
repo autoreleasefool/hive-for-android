@@ -28,7 +28,7 @@ export const SpectatorNavigator = () => {
         component={EmptyScreen}
         options={({route}) => {
           const title = (() => {
-            if (route.params.match.host?.displayName) {
+            if (route.params.match?.host?.displayName) {
               return `${route.params.match.host.displayName}'s match`;
             } else {
               return 'Match details';

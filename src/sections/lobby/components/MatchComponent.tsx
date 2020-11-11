@@ -13,7 +13,7 @@ export const MatchComponent = ({match}: Props) => {
   const navigation = useNavigation<StackNavigationProp<SpectatorRoute>>();
 
   const onPress = useCallback(() => {
-    navigation.navigate('MatchDetails', {match});
+    navigation.navigate('MatchDetails', {matchId: match.id});
   }, [navigation, match]);
 
   if (!match.host) {
