@@ -67,7 +67,6 @@ export const useQuery = <T extends Endpoint>(request: QueryRequest): QueryHookRe
 
     const performFetch = async (account: Account | undefined) => {
       let url = `${baseURL}/${path(request)}`;
-      /* eslint-disable-next-line no-undef */
       let response: Response;
       try {
         response = await fetch(url, {
@@ -92,6 +91,13 @@ export const useQuery = <T extends Endpoint>(request: QueryRequest): QueryHookRe
         setIsRefreshing(false);
       } catch (error) {
         console.error('Response parsing failed', error);
+        try {
+          let text = await response.text();
+          console.error('Failed to parse response:', text);
+        } catch {
+          // Ignore
+        }
+
         postError({type: QueryErrorType.responseError, message: 'Response error', error});
       }
     };
