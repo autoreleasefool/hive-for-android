@@ -1,7 +1,6 @@
 import {MatchComponent} from '../components/MatchComponent';
 import React, {useCallback, useEffect} from 'react';
 import {FlatList} from 'react-native';
-import {StackNavigationProp} from '@react-navigation/stack';
 import {Endpoint} from 'api/endpoint';
 import {Match} from 'api/types/match';
 import {useQuery} from 'api/useQuery';
@@ -10,17 +9,12 @@ import {EmptyStateView} from 'components/EmptyStateView';
 import {LoadingView} from 'components/LoadingView';
 import {ToastType} from 'components/toast/Toast';
 import {useToast} from 'components/toast/ToastProvider';
-import {SpectatorRoute} from 'navigation/spectator/SpectatorRoute';
-
-interface Props {
-  navigation: StackNavigationProp<SpectatorRoute, 'SpectatorLobby'>;
-}
 
 const ListEmptyComponent = () => {
   return <EmptyStateView message="No matches found" />;
 };
 
-export const LobbyListScreen = ({navigation}: Props) => {
+export const LobbyListScreen = () => {
   const {showToast} = useToast();
 
   const {data, error, isLoading, refresh, isRefreshing} = useQuery<Endpoint.openMatches>({
@@ -30,9 +24,8 @@ export const LobbyListScreen = ({navigation}: Props) => {
   useEffect(() => {
     if (error) {
       showToast({message: error.message, type: ToastType.error});
-      navigation.pop();
     }
-  }, [error, navigation, showToast]);
+  }, [error, showToast]);
 
   const renderItem = useCallback(({item}: {item: Match}) => {
     return <MatchComponent match={item} />;
