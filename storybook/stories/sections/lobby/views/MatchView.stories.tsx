@@ -1,5 +1,5 @@
 import React from 'react';
-import {Box} from 'components/Box';
+import {ScrollView} from 'react-native-gesture-handler';
 import {MatchView} from 'sections/lobby/views/MatchView';
 
 const player = {
@@ -9,13 +9,14 @@ const player = {
 
 const MatchViewStory = () => {
   return (
-    <Box padding="s" justifyContent="center" backgroundColor="background" flex={1}>
+    <ScrollView>
       <MatchView
         host={player}
         opponent={player}
         onPress={() => console.log('Pressed match view')}
       />
-    </Box>
+      <MatchView host={player} onPress={() => console.log('Pressed match view')} />
+    </ScrollView>
   );
 };
 
