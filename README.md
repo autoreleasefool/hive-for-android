@@ -30,3 +30,7 @@ To learn more about Hive, visit [Board Game Geek](https://www.boardgamegeek.com/
 1. Run `yarn lint` for styling conformance
    - It should automatically run as you work in the Xcode project
 1. Open a PR with your changes
+
+## Notice
+
+Hive for Android is not affiliated with Gen42 Games in any way.
